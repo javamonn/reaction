@@ -1,11 +1,13 @@
 import { createEnvironment } from "Artsy/Relay/createEnvironment"
 import { Boot } from "Artsy/Router/Components/Boot"
 import { Hydrator } from "Artsy/Router/Components/Hydrator"
+import tracer from "dd-trace"
 import queryMiddleware from "farce/lib/queryMiddleware"
 import { Resolver } from "found-relay"
 import createRender from "found/lib/createRender"
 import { getFarceResult } from "found/lib/server"
 import { getLoadableState } from "loadable-components/server"
+import { Span, Tags } from "opentracing"
 import React, { ComponentType } from "react"
 import ReactDOMServer from "react-dom/server"
 import { getUser } from "Utils/getUser"
@@ -19,6 +21,38 @@ interface Resolve {
 }
 
 export function buildServerApp(config: RouterConfig): Promise<Resolve> {
+  const activeScope = tracer.scopeManager().active()
+  const ssrSpan = tracer.startSpan("ssr", {
+    childOf: activeScope && activeScope.span(),
+    tags: {
+      [Tags.SPAN_KIND]: Tags.SPAN_KIND_RPC_SERVER,
+      "service.name": `${(tracer as any)._service || "dev"}.reaction`,
+      "resource.name": config.routes.Component.displayName,
+      "span.type": "web",
+    },
+  })
+  console.log(ssrSpan)
+
+  function trace<T extends Promise<any>>(name: string, callback: T): T {
+    const span = tracer.startSpan(`ssr.${name}`, {
+      childOf: ssrSpan,
+    })
+    return callback
+      .then(result => {
+        span.finish()
+        return result
+      })
+      .catch(error => {
+        span.addTags({
+          "error.type": error.name,
+          "error.msg": error.message,
+          "error.stack": error.stack,
+        })
+        span.finish()
+        throw error
+      }) as T
+  }
+
   return new Promise(async (resolve, reject) => {
     try {
       const { context = {}, routes = [], url } = config
@@ -30,17 +64,23 @@ export function buildServerApp(config: RouterConfig): Promise<Resolve> {
       const render = createRender({})
       const headTags = []
 
-      const { redirect, status, element } = await getFarceResult({
-        url,
-        historyMiddlewares,
-        routeConfig: routes,
-        resolver,
-        render,
-      })
+      const { redirect, status, element } = await trace(
+        "farce",
+        getFarceResult({
+          url,
+          historyMiddlewares,
+          routeConfig: routes,
+          resolver,
+          render,
+        })
+      )
 
       if (redirect) {
         resolve({
           redirect,
+          // TODO: The docs seem to indicate that if there’s a redirect there
+          //       will not be a status.
+          //       https://github.com/4Catalyzer/found#server-side-rendering
           status,
         })
         return
@@ -68,12 +108,17 @@ export function buildServerApp(config: RouterConfig): Promise<Resolve> {
         )
       }
 
-      // Kick off relay requests to prime cache
-      ReactDOMServer.renderToString(<App />)
-
-      // Serializable data to be rehydrated on client
-      const relayData = await relayEnvironment.relaySSRMiddleware.getCache()
-      const loadableState = await getLoadableState(<App />)
+      const { relayData, loadableState } = await trace(
+        "fetch",
+        (async () => {
+          // Kick off relay requests to prime cache
+          ReactDOMServer.renderToString(<App />)
+          // Serializable data to be rehydrated on client
+          const data = await relayEnvironment.relaySSRMiddleware.getCache()
+          const state = await getLoadableState(<App />)
+          return { relayData: data, loadableState: state }
+        })()
+      )
 
       /**
        * FIXME: Relay SSR middleware is passing a _res object across which
@@ -95,9 +140,15 @@ export function buildServerApp(config: RouterConfig): Promise<Resolve> {
       }
 
       resolve({
-        ServerApp: props => (
-          <App data={relayData} loadableState={loadableState} {...props} />
-        ),
+        ServerApp: props => {
+          setImmediate(() => {
+            console.log("FINISHED!")
+            ssrSpan.finish()
+          })
+          return (
+            <App data={relayData} loadableState={loadableState} {...props} />
+          )
+        },
         status,
         headTags,
       })

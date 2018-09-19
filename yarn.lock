@@ -1126,6 +1126,12 @@
   version "0.22.8"
   resolved "https://registry.yarnpkg.com/@types/cheerio/-/cheerio-0.22.8.tgz#5702f74f78b73e13f1eb1bd435c2c9de61a250d4"
 
+"@types/dd-trace@^0.5.1":
+  version "0.5.1"
+  resolved "https://registry.yarnpkg.com/@types/dd-trace/-/dd-trace-0.5.1.tgz#de8489274c96decc2d1023f198b82bc3ad690fc1"
+  dependencies:
+    opentracing ">=0.14.1"
+
 "@types/enzyme@^3.1.0":
   version "3.1.11"
   resolved "https://registry.yarnpkg.com/@types/enzyme/-/enzyme-3.1.11.tgz#0a059d2fe2c686f024ada911d24473cdb2e13903"
@@ -9281,6 +9287,10 @@ openseadragon@^2.3.1:
 opentracing@0.14.1:
   version "0.14.1"
   resolved "https://registry.yarnpkg.com/opentracing/-/opentracing-0.14.1.tgz#40d278beea417660a35dd9d3ee76511ffa911dcd"
+
+opentracing@>=0.14.1:
+  version "0.14.3"
+  resolved "https://registry.yarnpkg.com/opentracing/-/opentracing-0.14.3.tgz#23e3ad029fa66a653926adbe57e834469f8550aa"
 
 opn@5.2.0:
   version "5.2.0"

@@ -18,6 +18,7 @@ env.load()
  */
 const {
   WEBPACK_DEVTOOL = "cheap-module-eval-source-map",
+  DD_TRACER_SERVICE_NAME,
   FORCE_CLOUDFRONT_URL,
   GEMINI_CLOUDFRONT_URL,
   METAPHYSICS_ENDPOINT,
@@ -28,6 +29,7 @@ const {
 } = process.env
 
 const sharifyPath = sharify({
+  DD_TRACER_SERVICE_NAME,
   FORCE_CLOUDFRONT_URL,
   GEMINI_CLOUDFRONT_URL,
   METAPHYSICS_ENDPOINT,

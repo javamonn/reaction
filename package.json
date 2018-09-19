@@ -75,6 +75,7 @@
     "@storybook/addon-options": "^3.4.10",
     "@storybook/addons": "^3.4.10",
     "@storybook/react": "^3.4.10",
+    "@types/dd-trace": "^0.5.1",
     "@types/enzyme": "^3.1.0",
     "@types/isomorphic-fetch": "^0.0.34",
     "@types/jest": "^20.0.7",
