@@ -1,13 +1,11 @@
 /* tslint:disable */
 
 import { ConcreteFragment } from "relay-runtime";
+import { GridItem_artwork$ref } from "./GridItem_artwork.graphql";
 declare const _OriginArtwork_artwork$ref: unique symbol;
 export type OriginArtwork_artwork$ref = typeof _OriginArtwork_artwork$ref;
 export type OriginArtwork_artwork = {
-    readonly id: string;
-    readonly images: ReadonlyArray<({
-        readonly image_url: string | null;
-    }) | null> | null;
+    readonly " $fragmentRefs": GridItem_artwork$ref;
     readonly " $refType": OriginArtwork_artwork$ref;
 };
 
@@ -21,29 +19,9 @@ const node: ConcreteFragment = {
   "argumentDefinitions": [],
   "selections": [
     {
-      "kind": "ScalarField",
-      "alias": null,
-      "name": "id",
-      "args": null,
-      "storageKey": null
-    },
-    {
-      "kind": "LinkedField",
-      "alias": null,
-      "name": "images",
-      "storageKey": null,
-      "args": null,
-      "concreteType": "Image",
-      "plural": true,
-      "selections": [
-        {
-          "kind": "ScalarField",
-          "alias": null,
-          "name": "image_url",
-          "args": null,
-          "storageKey": null
-        }
-      ]
+      "kind": "FragmentSpread",
+      "name": "GridItem_artwork",
+      "args": null
     },
     {
       "kind": "ScalarField",
@@ -54,5 +32,5 @@ const node: ConcreteFragment = {
     }
   ]
 };
-(node as any).hash = 'ddaefb870e6d0d2f320491427319a039';
+(node as any).hash = '2485c6799e959aa0cd0ac820cfc8d094';
 export default node;

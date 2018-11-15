@@ -1,13 +1,16 @@
 /* tslint:disable */
 
 import { ConcreteFragment } from "relay-runtime";
+import { GridItem_artwork$ref } from "./GridItem_artwork.graphql";
 declare const _SimilarArtworkGrid_artworks$ref: unique symbol;
 export type SimilarArtworkGrid_artworks$ref = typeof _SimilarArtworkGrid_artworks$ref;
 export type SimilarArtworkGrid_artworks = ReadonlyArray<{
     readonly id: string;
-    readonly images: ReadonlyArray<({
-        readonly image_url: string | null;
-    }) | null> | null;
+    readonly __id: string;
+    readonly image: ({
+        readonly aspect_ratio: number;
+    }) | null;
+    readonly " $fragmentRefs": GridItem_artwork$ref;
     readonly " $refType": SimilarArtworkGrid_artworks$ref;
 }>;
 
@@ -30,31 +33,36 @@ const node: ConcreteFragment = {
       "storageKey": null
     },
     {
+      "kind": "ScalarField",
+      "alias": null,
+      "name": "__id",
+      "args": null,
+      "storageKey": null
+    },
+    {
       "kind": "LinkedField",
       "alias": null,
-      "name": "images",
+      "name": "image",
       "storageKey": null,
       "args": null,
       "concreteType": "Image",
-      "plural": true,
+      "plural": false,
       "selections": [
         {
           "kind": "ScalarField",
           "alias": null,
-          "name": "image_url",
+          "name": "aspect_ratio",
           "args": null,
           "storageKey": null
         }
       ]
     },
     {
-      "kind": "ScalarField",
-      "alias": null,
-      "name": "__id",
-      "args": null,
-      "storageKey": null
+      "kind": "FragmentSpread",
+      "name": "GridItem_artwork",
+      "args": null
     }
   ]
 };
-(node as any).hash = '2a2c544fe56c0544d069a3d2b2a27f0c';
+(node as any).hash = '3abc774f7eb76ac2a3224e36c94c8699';
 export default node;

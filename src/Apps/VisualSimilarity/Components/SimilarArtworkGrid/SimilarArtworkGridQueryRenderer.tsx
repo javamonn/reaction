@@ -1,4 +1,4 @@
-import { Spinner } from "@artsy/palette"
+import { Flex, Spinner } from "@artsy/palette"
 import { SimilarArtworkGridQueryRendererQuery } from "__generated__/SimilarArtworkGridQueryRendererQuery.graphql"
 import { ContextConsumer } from "Artsy"
 import React from "react"
@@ -12,7 +12,6 @@ class SimilarArtworkGridQueryRenderer extends React.Component<any> {
 
   componentDidMount() {
     const { artwork } = this.props
-    console.log("artwork", artwork)
     fetch(`${SIMILARITY_URL}/similarity-by-artwork-id/${artwork.id}.json`)
       .then(res => res.json())
       .then(data => {
@@ -26,11 +25,24 @@ class SimilarArtworkGridQueryRenderer extends React.Component<any> {
       })
   }
 
+  renderSpinner() {
+    return (
+      <Flex
+        flexGrow="1"
+        justifyContent="center"
+        alignItems="center"
+        flexBasis="fill"
+      >
+        <Spinner />
+      </Flex>
+    )
+  }
+
   render() {
     const { similarArtworkIDs } = this.state
 
     if (!similarArtworkIDs) {
-      return <Spinner />
+      return this.renderSpinner()
     } else if (similarArtworkIDs.length === 0) {
       // TODO: empty state
       return null
@@ -54,7 +66,7 @@ class SimilarArtworkGridQueryRenderer extends React.Component<any> {
                 if (props) {
                   return <SimilarArtworkGrid artworks={props.artworks} />
                 } else {
-                  return <Spinner />
+                  return this.renderSpinner()
                 }
               }}
             />
