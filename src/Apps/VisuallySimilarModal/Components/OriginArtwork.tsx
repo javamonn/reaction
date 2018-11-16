@@ -14,7 +14,7 @@ const OriginArtwork = ({ artwork }) => {
     <ArtworkGridItem
       artwork={artwork}
       useRelay
-      style={{ minWidth: 320, maxHeight: 450, height: 450 }}
+      style={{ minWidth: 320, width: 320, maxHeight: 450, height: 450 }}
     />
   )
 }
