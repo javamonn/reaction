@@ -11,44 +11,44 @@ import styled from "styled-components"
 
 const SIMILARITY_URL = "http://localhost:8000"
 
-const Link = styled.a`
-  text-decoration: none;
-`
-
 const SpinnerContainer = styled.div`
   width: 100%;
   height: 100px;
   position: relative;
 `
 
+const BorderBoxContainer = styled(BorderBox)`
+  cursor: pointer;
+`
+
 const ArtworkVisuallySimilar = ({ artworks, artworkID }) => {
   return (
-    <Link href={`/visual_similarity/${artworkID}`}>
-      <BorderBox hover>
-        <Flex justifyContent="space-between" flexDirection="row" flexGrow={1}>
-          <Flex justifyContent="center" alignItems="center" flexDirection="row">
-            <Sans size="3" weight="medium" color="black">
-              Visually similar
-            </Sans>
-            <Spacer width={16} />
-            {artworks &&
-              take(tail(artworks), 4).map(
-                ({ image: { image_url } }, idx, arr) => (
-                  <React.Fragment key={image_url}>
-                    <Image
-                      src={image_url.replace(":version", "small")}
-                      width="30px"
-                      height="30px"
-                    />
-                    {idx < arr.length - 1 && <Spacer width={8} />}
-                  </React.Fragment>
-                )
-              )}
-          </Flex>
+    <BorderBoxContainer hover>
+      <Flex justifyContent="space-between" flexDirection="row" flexGrow={1}>
+        <Flex justifyContent="center" alignItems="center" flexDirection="row">
+          <Sans size="3" weight="medium" color="black">
+            Visually similar
+          </Sans>
+          <Spacer width={16} />
+          {artworks &&
+            take(tail(artworks), 4).map(
+              ({ image: { image_url } }, idx, arr) => (
+                <React.Fragment key={image_url}>
+                  <Image
+                    src={image_url.replace(":version", "small")}
+                    width="40px"
+                    height="40px"
+                  />
+                  {idx < arr.length - 1 && <Spacer width={8} />}
+                </React.Fragment>
+              )
+            )}
+        </Flex>
+        <Flex justifyContent="center" alignItems="center">
           <Icon name="chevron-right" fontSize="18px" color={colors.black} />
         </Flex>
-      </BorderBox>
-    </Link>
+      </Flex>
+    </BorderBoxContainer>
   )
 }
 

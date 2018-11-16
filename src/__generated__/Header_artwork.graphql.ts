@@ -4,6 +4,7 @@ import { ConcreteFragment } from "relay-runtime";
 declare const _Header_artwork$ref: unique symbol;
 export type Header_artwork$ref = typeof _Header_artwork$ref;
 export type Header_artwork = {
+    readonly id: string;
     readonly title: string | null;
     readonly date: string | null;
     readonly " $refType": Header_artwork$ref;
@@ -18,6 +19,13 @@ const node: ConcreteFragment = {
   "metadata": null,
   "argumentDefinitions": [],
   "selections": [
+    {
+      "kind": "ScalarField",
+      "alias": null,
+      "name": "id",
+      "args": null,
+      "storageKey": null
+    },
     {
       "kind": "ScalarField",
       "alias": null,
@@ -41,5 +49,5 @@ const node: ConcreteFragment = {
     }
   ]
 };
-(node as any).hash = 'ecaf6e2e02e7323ea24487467bddbd43';
+(node as any).hash = '9b7065d99c31ffef8933f73dfe7ed7c6';
 export default node;

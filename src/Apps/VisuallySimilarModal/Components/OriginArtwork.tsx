@@ -6,13 +6,16 @@ import styled from "styled-components"
 
 const GridItemContainer = styled(Box)`
   flex-shrink: 0;
+  max-height: 530px;
 `
 
 const OriginArtwork = ({ artwork }) => {
   return (
-    <GridItemContainer width={380}>
-      <ArtworkGridItem artwork={artwork} useRelay />
-    </GridItemContainer>
+    <ArtworkGridItem
+      artwork={artwork}
+      useRelay
+      style={{ minWidth: 320, maxHeight: 450, height: 450 }}
+    />
   )
 }
 

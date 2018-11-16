@@ -7,6 +7,7 @@ import styled from "styled-components"
 
 const GridContainer = styled(Box)`
   overflow-y: scroll;
+  max-height: 490px;
 `
 
 const SimilarArtworkGrid = ({ artworks }) => {
@@ -14,8 +15,8 @@ const SimilarArtworkGrid = ({ artworks }) => {
     edges: tail(artworks).map(artwork => ({ node: artwork })),
   }
   return (
-    <GridContainer>
-      <ArtworkGrid artworks={artworksConnection} columnCount={2} />
+    <GridContainer pr={42}>
+      <ArtworkGrid artworks={artworksConnection} columnCount={3} />
     </GridContainer>
   )
 }

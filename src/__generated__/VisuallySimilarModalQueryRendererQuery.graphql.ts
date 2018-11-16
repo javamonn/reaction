@@ -4,23 +4,23 @@ import { ConcreteRequest } from "relay-runtime";
 import { Header_artwork$ref } from "./Header_artwork.graphql";
 import { OriginArtwork_artwork$ref } from "./OriginArtwork_artwork.graphql";
 import { SimilarArtworkGridQueryRenderer_artwork$ref } from "./SimilarArtworkGridQueryRenderer_artwork.graphql";
-export type routes_VisualSimilarityQueryVariables = {
+export type VisuallySimilarModalQueryRendererQueryVariables = {
     readonly artworkID: string;
 };
-export type routes_VisualSimilarityQueryResponse = {
+export type VisuallySimilarModalQueryRendererQueryResponse = {
     readonly artwork: ({
         readonly " $fragmentRefs": Header_artwork$ref & OriginArtwork_artwork$ref & SimilarArtworkGridQueryRenderer_artwork$ref;
     }) | null;
 };
-export type routes_VisualSimilarityQuery = {
-    readonly response: routes_VisualSimilarityQueryResponse;
-    readonly variables: routes_VisualSimilarityQueryVariables;
+export type VisuallySimilarModalQueryRendererQuery = {
+    readonly response: VisuallySimilarModalQueryRendererQueryResponse;
+    readonly variables: VisuallySimilarModalQueryRendererQueryVariables;
 };
 
 
 
 /*
-query routes_VisualSimilarityQuery(
+query VisuallySimilarModalQueryRendererQuery(
   $artworkID: String!
 ) {
   artwork(id: $artworkID) {
@@ -32,6 +32,7 @@ query routes_VisualSimilarityQuery(
 }
 
 fragment Header_artwork on Artwork {
+  id
   title
   date
   __id
@@ -169,7 +170,14 @@ v2 = {
   "args": null,
   "storageKey": null
 },
-v3 = [
+v3 = {
+  "kind": "ScalarField",
+  "alias": null,
+  "name": "href",
+  "args": null,
+  "storageKey": null
+},
+v4 = [
   {
     "kind": "Literal",
     "name": "shallow",
@@ -177,13 +185,6 @@ v3 = [
     "type": "Boolean"
   }
 ],
-v4 = {
-  "kind": "ScalarField",
-  "alias": null,
-  "name": "href",
-  "args": null,
-  "storageKey": null
-},
 v5 = {
   "kind": "ScalarField",
   "alias": null,
@@ -201,13 +202,13 @@ v6 = {
 return {
   "kind": "Request",
   "operationKind": "query",
-  "name": "routes_VisualSimilarityQuery",
+  "name": "VisuallySimilarModalQueryRendererQuery",
   "id": null,
-  "text": "query routes_VisualSimilarityQuery(\n  $artworkID: String!\n) {\n  artwork(id: $artworkID) {\n    ...Header_artwork\n    ...OriginArtwork_artwork\n    ...SimilarArtworkGridQueryRenderer_artwork\n    __id\n  }\n}\n\nfragment Header_artwork on Artwork {\n  title\n  date\n  __id\n}\n\nfragment OriginArtwork_artwork on Artwork {\n  ...GridItem_artwork\n  __id\n}\n\nfragment SimilarArtworkGridQueryRenderer_artwork on Artwork {\n  id\n  __id\n}\n\nfragment GridItem_artwork on Artwork {\n  image {\n    placeholder\n    url(version: \"large\")\n    aspect_ratio\n  }\n  is_biddable\n  is_acquireable\n  href\n  ...Metadata_artwork\n  ...Save_artwork\n  __id\n}\n\nfragment Metadata_artwork on Artwork {\n  ...Details_artwork\n  ...Contact_artwork\n  href\n  __id\n}\n\nfragment Save_artwork on Artwork {\n  __id\n  id\n  is_saved\n}\n\nfragment Details_artwork on Artwork {\n  href\n  title\n  date\n  sale_message\n  cultural_maker\n  artists(shallow: true) {\n    __id\n    href\n    name\n  }\n  collecting_institution\n  partner(shallow: true) {\n    name\n    href\n    __id\n  }\n  sale {\n    is_auction\n    is_live_open\n    is_open\n    is_closed\n    display_timely_at\n    auction_state\n    __id\n  }\n  sale_artwork {\n    highest_bid {\n      display\n      __id: id\n    }\n    opening_bid {\n      display\n    }\n    __id\n  }\n  __id\n}\n\nfragment Contact_artwork on Artwork {\n  _id\n  href\n  is_inquireable\n  sale {\n    is_auction\n    is_live_open\n    is_open\n    is_closed\n    __id\n  }\n  partner(shallow: true) {\n    type\n    __id\n  }\n  sale_artwork {\n    highest_bid {\n      display\n      __id: id\n    }\n    opening_bid {\n      display\n    }\n    counts {\n      bidder_positions\n    }\n    __id\n  }\n  __id\n}\n",
+  "text": "query VisuallySimilarModalQueryRendererQuery(\n  $artworkID: String!\n) {\n  artwork(id: $artworkID) {\n    ...Header_artwork\n    ...OriginArtwork_artwork\n    ...SimilarArtworkGridQueryRenderer_artwork\n    __id\n  }\n}\n\nfragment Header_artwork on Artwork {\n  id\n  title\n  date\n  __id\n}\n\nfragment OriginArtwork_artwork on Artwork {\n  ...GridItem_artwork\n  __id\n}\n\nfragment SimilarArtworkGridQueryRenderer_artwork on Artwork {\n  id\n  __id\n}\n\nfragment GridItem_artwork on Artwork {\n  image {\n    placeholder\n    url(version: \"large\")\n    aspect_ratio\n  }\n  is_biddable\n  is_acquireable\n  href\n  ...Metadata_artwork\n  ...Save_artwork\n  __id\n}\n\nfragment Metadata_artwork on Artwork {\n  ...Details_artwork\n  ...Contact_artwork\n  href\n  __id\n}\n\nfragment Save_artwork on Artwork {\n  __id\n  id\n  is_saved\n}\n\nfragment Details_artwork on Artwork {\n  href\n  title\n  date\n  sale_message\n  cultural_maker\n  artists(shallow: true) {\n    __id\n    href\n    name\n  }\n  collecting_institution\n  partner(shallow: true) {\n    name\n    href\n    __id\n  }\n  sale {\n    is_auction\n    is_live_open\n    is_open\n    is_closed\n    display_timely_at\n    auction_state\n    __id\n  }\n  sale_artwork {\n    highest_bid {\n      display\n      __id: id\n    }\n    opening_bid {\n      display\n    }\n    __id\n  }\n  __id\n}\n\nfragment Contact_artwork on Artwork {\n  _id\n  href\n  is_inquireable\n  sale {\n    is_auction\n    is_live_open\n    is_open\n    is_closed\n    __id\n  }\n  partner(shallow: true) {\n    type\n    __id\n  }\n  sale_artwork {\n    highest_bid {\n      display\n      __id: id\n    }\n    opening_bid {\n      display\n    }\n    counts {\n      bidder_positions\n    }\n    __id\n  }\n  __id\n}\n",
   "metadata": {},
   "fragment": {
     "kind": "Fragment",
-    "name": "routes_VisualSimilarityQuery",
+    "name": "VisuallySimilarModalQueryRendererQuery",
     "type": "Query",
     "metadata": null,
     "argumentDefinitions": v0,
@@ -243,7 +244,7 @@ return {
   },
   "operation": {
     "kind": "Operation",
-    "name": "routes_VisualSimilarityQuery",
+    "name": "VisuallySimilarModalQueryRendererQuery",
     "argumentDefinitions": v0,
     "selections": [
       {
@@ -256,23 +257,23 @@ return {
         "plural": false,
         "selections": [
           {
-            "kind": "LinkedField",
+            "kind": "ScalarField",
             "alias": null,
-            "name": "artists",
-            "storageKey": "artists(shallow:true)",
-            "args": v3,
-            "concreteType": "Artist",
-            "plural": true,
-            "selections": [
-              v2,
-              v4,
-              v5
-            ]
+            "name": "cultural_maker",
+            "args": null,
+            "storageKey": null
           },
           {
             "kind": "ScalarField",
             "alias": null,
-            "name": "title",
+            "name": "id",
+            "args": null,
+            "storageKey": null
+          },
+          {
+            "kind": "ScalarField",
+            "alias": null,
+            "name": "date",
             "args": null,
             "storageKey": null
           },
@@ -330,7 +331,7 @@ return {
             "args": null,
             "storageKey": null
           },
-          v4,
+          v3,
           {
             "kind": "ScalarField",
             "alias": null,
@@ -341,16 +342,23 @@ return {
           {
             "kind": "ScalarField",
             "alias": null,
-            "name": "cultural_maker",
+            "name": "title",
             "args": null,
             "storageKey": null
           },
           {
-            "kind": "ScalarField",
+            "kind": "LinkedField",
             "alias": null,
-            "name": "date",
-            "args": null,
-            "storageKey": null
+            "name": "artists",
+            "storageKey": "artists(shallow:true)",
+            "args": v4,
+            "concreteType": "Artist",
+            "plural": true,
+            "selections": [
+              v2,
+              v3,
+              v5
+            ]
           },
           {
             "kind": "ScalarField",
@@ -364,12 +372,12 @@ return {
             "alias": null,
             "name": "partner",
             "storageKey": "partner(shallow:true)",
-            "args": v3,
+            "args": v4,
             "concreteType": "Partner",
             "plural": false,
             "selections": [
               v5,
-              v4,
+              v3,
               v2,
               {
                 "kind": "ScalarField",
@@ -512,13 +520,6 @@ return {
           {
             "kind": "ScalarField",
             "alias": null,
-            "name": "id",
-            "args": null,
-            "storageKey": null
-          },
-          {
-            "kind": "ScalarField",
-            "alias": null,
             "name": "is_saved",
             "args": null,
             "storageKey": null
@@ -529,5 +530,5 @@ return {
   }
 };
 })();
-(node as any).hash = 'fde3c67d927d6dc8b4183e05929b27a2';
+(node as any).hash = '4bac89e8e31ccc695dd9acdca3f37b40';
 export default node;

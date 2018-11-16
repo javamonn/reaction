@@ -28,10 +28,12 @@ class SimilarArtworkGridQueryRenderer extends React.Component<any> {
   renderSpinner() {
     return (
       <Flex
-        flexGrow="1"
+        flexGrow={1}
         justifyContent="center"
         alignItems="center"
         flexBasis="fill"
+        height={530}
+        position="relative"
       >
         <Spinner />
       </Flex>
